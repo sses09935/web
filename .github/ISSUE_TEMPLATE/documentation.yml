@@ -1,0 +1,19 @@
+name: Documentation
+description: Improve setup, deployment, roadmap, or project documentation.
+title: "[Docs] "
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What should be improved?
+      description: Describe the missing, unclear, or outdated documentation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Share the documentation change you recommend.
+    validations:
+      required: false

@@ -1,0 +1,19 @@
+name: Feature request
+description: Suggest a scoped enhancement for the static resource coordination PoC.
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: Who needs this, and what workflow does it improve?
+    validations:
+      required: true
+  - type: textarea
+    id: approach
+    attributes:
+      label: Suggested approach
+      description: Describe a static-export-compatible approach if you have one.
+    validations:
+      required: false

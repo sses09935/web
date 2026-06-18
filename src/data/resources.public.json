@@ -1,0 +1,50 @@
+[
+  {
+    "id": "sample-001",
+    "category": "照顧與專業服務",
+    "subCategory": "C單位",
+    "name": "公開範例長照站 A",
+    "phone": "02-0000-0001",
+    "address": "臺北市萬華區範例路1號",
+    "navAddress": "臺北市萬華區範例路1號",
+    "district": "臺北市萬華區",
+    "latitude": 25.0353,
+    "longitude": 121.4998,
+    "targetAudience": "需要日間活動與社區支持的長者",
+    "providedResources": "社區活動、關懷訪視、照顧諮詢",
+    "referralMethod": "公開範例資料，請勿作為實際轉介資訊",
+    "notes": "此筆資料為合成 sample data，僅供 public repo 建置與測試使用。"
+  },
+  {
+    "id": "sample-002",
+    "category": "照顧與專業服務",
+    "subCategory": "居家服務",
+    "name": "公開範例居服單位 B",
+    "phone": "02-0000-0002",
+    "address": "臺北市中正區範例街2號",
+    "navAddress": "臺北市中正區範例街2號",
+    "district": "臺北市中正區",
+    "latitude": 25.0418,
+    "longitude": 121.5169,
+    "targetAudience": "需要居家照顧協助的家庭",
+    "providedResources": "居家照顧、生活支持",
+    "referralMethod": "公開範例資料，請勿作為實際轉介資訊",
+    "notes": "此筆資料為合成 sample data，未對應任何真實服務單位。"
+  },
+  {
+    "id": "sample-003",
+    "category": "輔具與交通環境",
+    "subCategory": "交通接送",
+    "name": "公開範例交通服務 C",
+    "phone": "02-0000-0003",
+    "address": "臺北市大同區範例大道3號",
+    "navAddress": "臺北市大同區範例大道3號",
+    "district": "臺北市大同區",
+    "latitude": null,
+    "longitude": null,
+    "targetAudience": "需要交通接送資訊的照顧者",
+    "providedResources": "交通接送諮詢",
+    "referralMethod": "公開範例資料，請勿作為實際轉介資訊",
+    "notes": "此筆故意缺少座標，用於驗證缺漏座標狀態。"
+  }
+]

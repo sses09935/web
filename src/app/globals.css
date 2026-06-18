@@ -1,0 +1,346 @@
+@import "tailwindcss";
+
+/* Fix Mobile Sticky Hover by disabling tap highlight on touch devices */
+@media (hover: none) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+:root {
+  /* Colors */
+  --bg-primary: #f8fafc;
+  --bg-card: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: #cbd5e1;
+  --accent-color: #1e40af;
+  --accent-hover: #1e3a8a;
+  --focus-outline: #2563eb;
+  
+  /* Category Card Colors (Default theme) */
+  --cat-care-bg: #ecfeff;
+  --cat-care-text: #0891b2;
+  --cat-care-border: #bfeafe;
+  
+  --cat-dementia-bg: #faf5ff;
+  --cat-dementia-text: #9333ea;
+  --cat-dementia-border: #e9d5ff;
+  
+  --cat-respite-bg: #fff1f2;
+  --cat-respite-text: #e11d48;
+  --cat-respite-border: #fecdd3;
+  
+  --cat-assist-bg: #f0fdf4;
+  --cat-assist-text: #16a34a;
+  --cat-assist-border: #bbf7d0;
+
+  /* Maplibre Popups */
+  --popup-bg: #ffffff;
+  --popup-text: #0f172a;
+}
+
+/* W3C WCAG 2.2 AAA - Yellow on Black High Contrast Theme */
+html.theme-high-contrast {
+  --bg-primary: #000000;
+  --bg-card: #000000;
+  --text-primary: #ffff00;
+  --text-secondary: #ffff00;
+  --border-color: #ffffff;
+  --accent-color: #ffff00;
+  --accent-hover: #ffff00;
+  --focus-outline: #ffffff;
+  
+  /* All Category Cards in High Contrast mode become yellow-text/black-bg/white-border */
+  --cat-care-bg: #000000;
+  --cat-care-text: #ffff00;
+  --cat-care-border: #ffffff;
+  
+  --cat-dementia-bg: #000000;
+  --cat-dementia-text: #ffff00;
+  --cat-dementia-border: #ffffff;
+  
+  --cat-respite-bg: #000000;
+  --cat-respite-text: #ffff00;
+  --cat-respite-border: #ffffff;
+  
+  --cat-assist-bg: #000000;
+  --cat-assist-text: #ffff00;
+  --cat-assist-border: #ffffff;
+
+  /* Maplibre Popups */
+  --popup-bg: #000000;
+  --popup-text: #ffff00;
+}
+
+/* Base font-size classes for HTML root node proportional zooming */
+html.text-size-standard {
+  font-size: 16px;
+}
+html.text-size-large {
+  font-size: 20px;
+}
+html.text-size-xlarge {
+  font-size: 24px;
+}
+
+/* Ensure layouts adapt smoothly to text enlargement */
+body {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100dvh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+input,
+textarea,
+select,
+[contenteditable="true"] {
+  user-select: auto !important;
+  -webkit-user-select: auto !important;
+}
+
+/* Maplibre GL JS - Native style toggling handles high contrast via setStyle() */
+/* No CSS filter needed — Maplibre uses CartoDB dark-matter vector tiles directly */
+
+/* Maplibre Popup Overrides for accessibility & thematic sync */
+.maplibregl-popup-content {
+  background-color: var(--popup-bg) !important;
+  color: var(--popup-text) !important;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px -1px rgba(0, 0, 0, 0.15);
+  font-size: 1rem;
+  padding: 12px !important;
+}
+
+.maplibregl-popup-tip {
+  border-top-color: var(--popup-bg) !important;
+}
+
+.maplibregl-popup-close-button {
+  color: var(--popup-text) !important;
+  padding: 4px 8px !important;
+  font-size: 1.25rem !important;
+  font-weight: bold;
+  right: 4px !important;
+  top: 4px !important;
+}
+
+/* Maplibre custom marker keyboard focus ring */
+.maplibre-custom-marker:focus-visible {
+  outline: 4px solid var(--focus-outline) !important;
+  outline-offset: 2px !important;
+  border-radius: 50%;
+}
+
+/* Strict Keyboard Accessibility - highly visible focus ring */
+*:focus-visible {
+  outline: 4px solid var(--focus-outline) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4) !important;
+  z-index: 50;
+}
+
+/* Custom Accessibility Skip-Link */
+.skip-link {
+  background-color: #1e40af;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 0 0 8px 8px;
+  font-weight: bold;
+  border: 2px solid #ffffff;
+  text-decoration: none;
+}
+
+/* Ensure no fixed height issues with resizing text */
+.flexible-card {
+  min-height: 12rem;
+  height: auto;
+}
+
+/* Glassmorphism utility for default state */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+html.theme-high-contrast .glass-effect {
+  background: #000000;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 2px solid #ffffff;
+}
+
+/* Premium HSL Categorized Icons */
+.cat-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.cat-care {
+  background-color: var(--cat-care-bg);
+  color: var(--cat-care-text);
+  border-color: var(--cat-care-border);
+}
+
+.cat-dementia {
+  background-color: var(--cat-dementia-bg);
+  color: var(--cat-dementia-text);
+  border-color: var(--cat-dementia-border);
+}
+
+.cat-respite {
+  background-color: var(--cat-respite-bg);
+  color: var(--cat-respite-text);
+  border-color: var(--cat-respite-border);
+}
+
+.cat-assist {
+  background-color: var(--cat-assist-bg);
+  color: var(--cat-assist-text);
+  border-color: var(--cat-assist-border);
+}
+
+/* W3C WCAG 2.2 AAA - Explicit Tailwind class overrides for high-contrast mode */
+html.theme-high-contrast .bg-white,
+html.theme-high-contrast .bg-slate-50,
+html.theme-high-contrast .bg-slate-100,
+html.theme-high-contrast .bg-slate-200,
+html.theme-high-contrast .bg-slate-800,
+html.theme-high-contrast .bg-slate-900,
+html.theme-high-contrast .bg-slate-950,
+html.theme-high-contrast .bg-blue-50,
+html.theme-high-contrast .bg-red-50,
+html.theme-high-contrast .bg-amber-100 {
+  background-color: #000000 !important;
+}
+
+html.theme-high-contrast .text-slate-900,
+html.theme-high-contrast .text-slate-800,
+html.theme-high-contrast .text-slate-700,
+html.theme-high-contrast .text-slate-600,
+html.theme-high-contrast .text-slate-500,
+html.theme-high-contrast .text-slate-400,
+html.theme-high-contrast .text-slate-300,
+html.theme-high-contrast .text-slate-200,
+html.theme-high-contrast .text-blue-600,
+html.theme-high-contrast .text-blue-700,
+html.theme-high-contrast .text-red-600,
+html.theme-high-contrast .text-red-700,
+html.theme-high-contrast .text-green-600,
+html.theme-high-contrast .text-amber-800,
+html.theme-high-contrast .text-amber-700 {
+  color: #ffff00 !important;
+}
+
+html.theme-high-contrast .border-slate-100,
+html.theme-high-contrast .border-slate-200,
+html.theme-high-contrast .border-slate-300,
+html.theme-high-contrast .border-slate-700,
+html.theme-high-contrast .border-slate-800,
+html.theme-high-contrast .border-blue-100,
+html.theme-high-contrast .border-blue-200,
+html.theme-high-contrast .border-blue-700,
+html.theme-high-contrast .border-red-200,
+html.theme-high-contrast .border-amber-200,
+html.theme-high-contrast .border-amber-500,
+html.theme-high-contrast .border-green-600 {
+  border-color: #ffffff !important;
+}
+
+/* Selected/Active states in high-contrast mode should invert colors (black text on yellow background) */
+html.theme-high-contrast .bg-blue-600,
+html.theme-high-contrast .dark\:bg-yellow-400,
+html.theme-high-contrast button[aria-pressed="true"],
+html.theme-high-contrast button[aria-current="true"],
+html.theme-high-contrast article[aria-current="true"] {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  border-color: #ffffff !important;
+}
+
+/* Ensure child text color inside active states is also black */
+html.theme-high-contrast button[aria-pressed="true"] *,
+html.theme-high-contrast button[aria-current="true"] *,
+html.theme-high-contrast article[aria-current="true"] * {
+  color: #000000 !important;
+}
+
+/* Selected card custom highlight style for high-contrast */
+html.theme-high-contrast article[aria-current="true"] {
+  border: 4px solid #ffff00 !important;
+  box-shadow: 0 0 0 4px #ffffff !important;
+}
+
+/* High Contrast mode checkbox styling */
+html.theme-high-contrast input[type="checkbox"] {
+  accent-color: #ffff00 !important;
+  outline: 2px solid #ffffff !important;
+  outline-offset: 1px !important;
+  width: 1.2rem !important;
+  height: 1.2rem !important;
+}
+
+/* High contrast Skip Link highlight */
+html.theme-high-contrast .skip-link {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+}
+
+/* Thin scrollbar utility for service lists */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
+  border-radius: 3px;
+}
+
+/* iPhone safe area bottom padding */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* User location marker radar pulse animation (used by Map.tsx inline style) */
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Print-specific styles for QR Code Prescription */
+@media print {
+  .maplibregl-canvas-container,
+  .maplibregl-ctrl-group,
+  .maplibregl-popup {
+    display: none !important;
+  }
+}
+
+/* Maplibre Strict Animation Protection */
+.maplibregl-marker, .maplibre-custom-marker, .hospital-marker, .user-location-marker, .maplibregl-popup {
+  transition: none !important;
+  animation: none !important;
+}

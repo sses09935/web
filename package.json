@@ -1,0 +1,70 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sses09935/web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sses09935/web/issues"
+  },
+  "homepage": "https://github.com/sses09935/web#readme",
+  "scripts": {
+    "prepare:data": "node _scripts/prepare_resource_data.mjs",
+    "postinstall": "npm run prepare:data",
+    "predev": "npm run prepare:data",
+    "dev": "next dev",
+    "prebuild": "npm run prepare:data",
+    "build": "next build",
+    "start": "next start",
+    "prelint": "npm run prepare:data",
+    "lint": "eslint",
+    "preview:static": "node _scripts/serve_static_export.mjs",
+    "pretest:unit": "npm run prepare:data",
+    "test:unit": "jest tests/unit/",
+    "pretest:e2e": "npm run prepare:data",
+    "test:e2e": "npx playwright test tests/e2e/",
+    "pretest:memory": "npm run prepare:data",
+    "test:memory": "npx playwright test tests/memory/ --timeout=60000",
+    "precheck:docs": "npm run prepare:data",
+    "check:docs": "node _scripts/check_doc_data_status.mjs",
+    "test:all": "npm run test:unit && npm run test:e2e && npm run test:memory"
+  },
+  "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@turf/turf": "^7.3.5",
+    "lucide-react": "^1.16.0",
+    "maplibre-gl": "^5.24.0",
+    "next": "16.2.6",
+    "qrcode.react": "^4.2.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "overrides": {
+    "js-yaml": "4.2.0",
+    "postcss": "8.5.15"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "@playwright/test": "^1.60.0",
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20",
+    "@types/qrcode.react": "^3.0.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.6",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
+    "puppeteer-core": "^25.0.4",
+    "tailwindcss": "^4",
+    "ts-jest": "^29.4.11",
+    "typescript": "^5"
+  }
+}

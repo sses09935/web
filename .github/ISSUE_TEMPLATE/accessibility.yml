@@ -1,0 +1,26 @@
+name: Accessibility
+description: Report or improve keyboard, focus, semantic, or high-contrast behavior.
+title: "[A11y] "
+labels: ["accessibility"]
+body:
+  - type: textarea
+    id: issue
+    attributes:
+      label: Accessibility issue
+      description: Describe the affected workflow, control, or page.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Describe the accessible behavior that should happen.
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification notes
+      description: Include browser, keyboard, screen reader, or high-contrast details if available.
+    validations:
+      required: false
