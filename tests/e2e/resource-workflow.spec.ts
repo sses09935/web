@@ -45,4 +45,46 @@ test.describe('Resource workflow regression', () => {
     await expect(list).toHaveAttribute('aria-label', /載入更多按鈕/);
     await expect(list).not.toHaveAttribute('aria-label', /自動載入更多/);
   });
+
+  // Regression: district/category dropdowns (home-only UI) used to silently
+  // filter every tab and were never cleared by reset or tab navigation.
+  test('行政區下拉選取應寫入 URL，切換頁籤後應自動清除（防跨頁籤洩漏）', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForSelector('#district-select', { timeout: 15000 });
+
+    const districtSelect = page.locator('#district-select');
+    expect(await districtSelect.locator('option').count()).toBeGreaterThan(1);
+
+    const firstRealDistrict = await districtSelect.locator('option').nth(1).getAttribute('value');
+    expect(firstRealDistrict).toBeTruthy();
+    await districtSelect.selectOption(firstRealDistrict!);
+
+    // 選取後應持久化到 URL
+    await expect
+      .poll(() => new URL(page.url()).searchParams.get('district'))
+      .toBe(firstRealDistrict);
+
+    // 切換至「長照資源大總匯」頁籤後，行政區過濾應被清除，不再隱形套用於其他頁
+    await page.getByRole('button', { name: '長照資源大總匯分類資料庫' }).click();
+    await expect
+      .poll(() => new URL(page.url()).searchParams.has('district'))
+      .toBe(false);
+  });
+
+  test('全部重置應清除行政區下拉，避免殘留過濾', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForSelector('#district-select', { timeout: 15000 });
+
+    const districtSelect = page.locator('#district-select');
+    const firstRealDistrict = await districtSelect.locator('option').nth(1).getAttribute('value');
+    await districtSelect.selectOption(firstRealDistrict!);
+    await expect(districtSelect).toHaveValue(firstRealDistrict!);
+
+    // 修復前 handleGlobalReset 不清行政區；修復後應回到「全部」且 URL 不殘留 district
+    await page.getByRole('button', { name: '將所有服務單位重置並取消選取' }).first().click();
+    await expect(districtSelect).toHaveValue('全部');
+    await expect
+      .poll(() => new URL(page.url()).searchParams.has('district'))
+      .toBe(false);
+  });
 });
