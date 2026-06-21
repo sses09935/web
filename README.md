@@ -100,6 +100,8 @@ python _scripts/data_cleaning.py
 - 長文字只能在 ETL 輸出層或 presentation layer 截斷。
 - 地圖 marker 渲染前必須排除無效座標。
 
+更新正式資源檔的完整逐步流程(來源 Excel → `_raw_data/` → `data_cleaning.py` → `_cleaned_data/` → `prepare:data` → `check:docs`)、各步驟驗證閘、不可手改與不可 commit 清單,見 [`docs/DATA_UPDATE_CHECKLIST.md`](docs/DATA_UPDATE_CHECKLIST.md)。
+
 ## 開發
 
 Clone the repository:
@@ -193,6 +195,8 @@ Firebase Hosting 設定：
 - `.firebaserc` 的 default project 是 `ntuh-beihu-poc`
 
 Firebase Hosting 應使用本地靜態產物部署。部署前至少確認 `out/index.html`、`out/dashboard.html`、`out/404.html` 與 `out/maplibre-gl-csp-worker.js` 存在。
+
+本專案不假設只有 Firebase 一種 host。完整的通用 static-export 契約、CSP 指引(含 Maplibre worker 所需的 `worker-src` directive)、trailing slash / 404 / 快取與 immutable hashing 行為,以及 Netlify、Cloudflare Pages、GitHub Pages 等非 Firebase 部署目標,見 [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)。
 
 ## 安全與 PoC 邊界
 
