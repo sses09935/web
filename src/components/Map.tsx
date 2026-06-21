@@ -301,10 +301,13 @@ export default function Map({
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             onMarkerClick(res);
-            // Programmatically open popup for keyboard users
+            // Programmatically open popup for keyboard users.
+            // Use the marker's own toggle so MapLibre binds the popup to the
+            // marker's lngLat; calling popup.addTo() directly leaves the popup
+            // without coordinates and it silently fails to render.
             const popupInstance = marker.getPopup();
             if (popupInstance && !popupInstance.isOpen()) {
-              popupInstance.addTo(map.current!);
+              marker.togglePopup();
             }
           }
         });
