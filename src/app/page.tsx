@@ -216,6 +216,12 @@ function HomeContent() {
         }
       }
 
+      const district = params.get('district');
+      if (district) setSelectedDistrict(district);
+
+      const category = params.get('category');
+      if (category) setSelectedCategory(category);
+
       setIsHydrating(false);
     }, 0);
 
@@ -238,6 +244,9 @@ function HomeContent() {
       params.set('cats', Array.from(selectedSubCats).join('|'));
     }
 
+    if (selectedDistrict !== "全部") params.set('district', selectedDistrict);
+    if (selectedCategory !== "全部") params.set('category', selectedCategory);
+
     const queryString = params.toString();
     const currentSearch = typeof window !== 'undefined' ? window.location.search.replace(/^\?/, '') : '';
     
@@ -245,7 +254,7 @@ function HomeContent() {
       // Use native window.history to prevent Next.js router throttling on high-frequency state updates
       window.history.replaceState(null, '', `${window.location.pathname}${queryString ? `?${queryString}` : ''}`);
     }
-  }, [activeTab, debouncedSearchQuery, filterBeihuOnly, selectedScenario, selectedSubCats, isMounted, isHydrating, allSubCategories.length]);
+  }, [activeTab, debouncedSearchQuery, filterBeihuOnly, selectedScenario, selectedSubCats, selectedDistrict, selectedCategory, isMounted, isHydrating, allSubCategories.length]);
 
   const prescriptionSummary = useMemo(() => {
     const parts = [];
@@ -254,6 +263,8 @@ function HomeContent() {
     if (activeTab === "database") parts.push("長照資料庫");
     
     if (filterBeihuOnly) parts.push("限北護本院網絡");
+    if (selectedDistrict !== "全部") parts.push(`行政區: ${selectedDistrict}`);
+    if (selectedCategory !== "全部") parts.push(`服務類別: ${selectedCategory}`);
     if (selectedScenario) {
       const sc = SCENARIOS.find(s => s.id === selectedScenario);
       if (sc) parts.push(`情境: ${sc.title}`);
@@ -265,7 +276,7 @@ function HomeContent() {
       parts.push("全部分類");
     }
     return parts.join(" / ");
-  }, [activeTab, filterBeihuOnly, selectedScenario, searchQuery, selectedSubCats, allSubCategories.length]);
+  }, [activeTab, filterBeihuOnly, selectedDistrict, selectedCategory, selectedScenario, searchQuery, selectedSubCats, allSubCategories.length]);
 
   const registerCardRef = useCallback((id: string, el: HTMLDivElement | null) => {
     cardRefs.current[id] = el;
@@ -443,6 +454,10 @@ function HomeContent() {
     setSelectedScenario(null);
     setSelectedSubCats(new Set());
     setSearchQuery("");
+    // District/category dropdowns only exist on the home tab; clear them on
+    // navigation so they cannot silently filter other tabs with no visible UI.
+    setSelectedDistrict("全部");
+    setSelectedCategory("全部");
     
     let tabLabel = "首頁決策工作台";
     if (tab === "beihu") tabLabel = "億起台大北護特色看板";
@@ -524,6 +539,8 @@ function HomeContent() {
     setSelectedScenario(null);
     setFilterBeihuOnly(false);
     setSelectedSubCats(new Set());
+    setSelectedDistrict("全部");
+    setSelectedCategory("全部");
     setVisibleCountState({ filterKey: "", count: INITIAL_DISPLAY_COUNT });
     triggerAnnouncement("已將所有服務單位重置並取消選取");
   }, [triggerAnnouncement]);
@@ -915,7 +932,7 @@ function HomeContent() {
                       <input
                         id="search-input-home"
                         type="text"
-                        value={searchQuery === " " ? "" : searchQuery}
+                        value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="🔍 輸入關鍵字搜尋本院直屬據點、機構地址或計費注意事項..."
                         className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-white rounded-xl font-bold focus:outline-none focus:ring-4 focus:ring-blue-600 dark:focus:ring-yellow-400 min-h-[48px]"
@@ -928,7 +945,7 @@ function HomeContent() {
                       <span className="text-slate-800 dark:text-yellow-400">
                         已篩選出 <span className="text-blue-600 dark:text-yellow-300 text-lg">{filteredResources.length}</span> 筆派案網絡資源
                       </span>
-                      {(searchQuery.trim() !== "" || selectedScenario || selectedSubCats.size > 0 || filterBeihuOnly) && (
+                      {(searchQuery.trim() !== "" || selectedScenario || selectedSubCats.size > 0 || filterBeihuOnly || selectedDistrict !== "全部" || selectedCategory !== "全部") && (
                         <button
                           onClick={handleGlobalReset}
                           className="text-xs text-red-600 dark:text-yellow-300 underline hover:text-red-800 flex items-center gap-1 focus:outline-none focus:ring-4 focus:ring-blue-600 dark:focus:ring-yellow-400 min-h-[36px]"
@@ -1393,7 +1410,7 @@ function HomeContent() {
                     <span className="text-slate-800 dark:text-yellow-400">
                       <strong>{ARCHITECTURE_GROUPS[activeDatabaseGroup].title}</strong> (已篩選出 {filteredResources.length} 筆)
                     </span>
-                    {(searchQuery.trim() !== "" || selectedScenario || selectedSubCats.size > 0 || filterBeihuOnly) && (
+                    {(searchQuery.trim() !== "" || selectedScenario || selectedSubCats.size > 0 || filterBeihuOnly || selectedDistrict !== "全部" || selectedCategory !== "全部") && (
                       <button
                         onClick={handleGlobalReset}
                         className="text-xs text-red-600 dark:text-yellow-300 underline hover:text-red-800 flex items-center gap-1 focus:outline-none focus:ring-4 focus:ring-blue-600 dark:focus:ring-yellow-400 min-h-[36px]"
