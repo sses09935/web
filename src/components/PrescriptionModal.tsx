@@ -55,7 +55,7 @@ export default function PrescriptionModal({
                   value={currentUrl}
                   size={200}
                   level={"M"}
-                  includeMargin={true}
+                  marginSize={4}
                   className="rounded-lg"
                   aria-label="長照服務需求 QR Code，包含目前的搜尋與篩選狀態"
                 />
